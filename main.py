@@ -1,4 +1,4 @@
-import os
+from os import listdir, rename
 import tkinter as tk
 from tkinter import filedialog, ttk, IntVar
 from natsort import natsorted
@@ -12,10 +12,10 @@ def get_dir():
 def change_name(number):
     # global path
     try:
-        for file in natsorted(os.listdir(path)):
+        for file in natsorted(listdir(path)):
             old_fn = path + "/" + file
             new_fn = path + "/" + file[0:18] + str(number) + ".pdf"
-            os.rename(old_fn, new_fn)
+            rename(old_fn, new_fn)
             number += 1
     except ValueError:
         done_label['text'] = "Well that didn't work"
