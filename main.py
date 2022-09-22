@@ -3,11 +3,13 @@ import tkinter as tk
 from tkinter import filedialog, ttk, IntVar
 from natsort import natsorted
 
+
 def get_dir():
     global path
     path = filedialog.askdirectory()
     dir_label['text'] = path
     return
+
 
 def change_name(number):
     # global path
@@ -55,12 +57,12 @@ if __name__ == '__main__':
     e1.insert(0, 0)
     btn2 = tk.Button(root,
                      text='Change',
-                     command= lambda: change_name(int(e1.get())))
+                     command=lambda: change_name(int(e1.get())))
     btn2.grid(row=4, column=1, pady=10)
     # this doesn't work, also that's ok
 
     done_label = tk.Label(root,
-                          text= status)
+                          text=status)
     done_label.grid(row=5, column=1)
 
     root.mainloop()
