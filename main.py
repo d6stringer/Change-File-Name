@@ -1,5 +1,4 @@
 import os
-import tkinter.messagebox
 import tkinter as tk
 from tkinter import filedialog, ttk, IntVar
 from natsort import natsorted
@@ -18,44 +17,51 @@ def change_name(number):
             new_fn = path + "/" + file[0:18] + str(number) + ".pdf"
             os.rename(old_fn, new_fn)
             number += 1
-
-    except:
-        pass
-    finally:
+    except ValueError:
+        done_label['text'] = "Well that didn't work"
+        root.update_idletasks()
+        return
+    except FileNotFoundError:
+        done_label['text'] = "Well that didn't work"
+        root.update_idletasks()
+        return
+    else:
         global status
-        status = 1
+        status = 'Done!'
+        done_label['text'] = status
+        root.update_idletasks()
+    finally:
         root.update_idletasks()
 
 
 path = ''
-status = 0
+status = ''
 if __name__ == '__main__':
     root = tk.Tk()
     root.title('Change File Names')
     btn1 = tk.Button(root,
                      text='Select Folder',
                      command=get_dir)
-    btn1.grid(row=0, column=0, pady=10)
+    btn1.grid(row=0, column=1, pady=10)
     dir_label = ttk.Label(root,
                           text=path)
-    dir_label.grid(row=1, column=0, pady=10)
+    dir_label.grid(row=1, column=1, pady=10)
     start = IntVar()
-
     l_e1 = tk.Label(root,
                     text="Starting Number")
-    l_e1.grid(row=2, column=0)
+    l_e1.grid(row=2, column=1)
     e1 = tk.Entry(root)
-    e1.grid(row=2, column=1)
-
+    e1.grid(row=3, column=1, padx=100)
+    e1.insert(0, 0)
     btn2 = tk.Button(root,
                      text='Change',
                      command= lambda: change_name(int(e1.get())))
-    btn2.grid(row=3, column=1, pady=10)
+    btn2.grid(row=4, column=1, pady=10)
+    # this doesn't work, also that's ok
 
-    if status:
-        done_label = tk.Label(root,
-                              text="Done!")
-        done_label.grid(row=4, column=0)
+    done_label = tk.Label(root,
+                          text= status)
+    done_label.grid(row=5, column=1)
 
     root.mainloop()
 
