@@ -2,6 +2,7 @@ import os
 import tkinter.messagebox
 import tkinter as tk
 from tkinter import filedialog, ttk, IntVar
+from natsort import natsorted
 
 def get_dir():
     global path
@@ -12,11 +13,12 @@ def get_dir():
 def change_name(number):
     # global path
     try:
-        for file in os.listdir(path):
+        for file in natsorted(os.listdir(path)):
             old_fn = path + "/" + file
-            new_fn = path + "/" + file[0:18] + ' - ' + str(number) + ".pdf"
+            new_fn = path + "/" + file[0:18] + str(number) + ".pdf"
             os.rename(old_fn, new_fn)
             number += 1
+
     except:
         pass
     finally:
